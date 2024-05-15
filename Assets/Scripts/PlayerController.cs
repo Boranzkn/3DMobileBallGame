@@ -7,28 +7,37 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float speed = 5f;
     CurrentDirection cr;
+    private bool isPlayerDead;
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         cr = CurrentDirection.right;
+        isPlayerDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RayCastDetector();
+        if (!isPlayerDead)
+        {
+            RayCastDetector();
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) // For Mobile
-        {
-            ChangeDirection();
-            StopPlayer();
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) // For Mobile
+            {
+                ChangeDirection();
+                StopPlayer();
+            }
+            else if (Input.GetKeyDown("space")) // For PC to test everything is OK
+            {
+                ChangeDirection();
+                StopPlayer();
+            }
         }
-        else if (Input.GetKeyDown("space")) // For PC to test everything is OK
+        else
         {
-            ChangeDirection();
-            StopPlayer();
+            return;
         }
     }
 
@@ -43,6 +52,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             StopPlayer();
+            isPlayerDead=true;
+            this.gameObject.SetActive(false);
         }
     }
 
