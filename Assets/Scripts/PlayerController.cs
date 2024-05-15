@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    private float speed = 500f;
+    private float speed = 5f;
     CurrentDirection cr;
     
     // Start is called before the first frame update
@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RayCastDetector();
+
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) // For Mobile
         {
             ChangeDirection();
@@ -30,6 +32,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void RayCastDetector()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(this.transform.position, Vector3.down, out hit))
+        {
+            MovePlayer();
+        }
+        else
+        {
+            StopPlayer();
+        }
+    }
+
     private enum CurrentDirection
     {
         right, left
@@ -37,7 +53,6 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeDirection()
     {
-        MovePlayer();
         if (cr == CurrentDirection.left)
         {
             cr = CurrentDirection.right;
