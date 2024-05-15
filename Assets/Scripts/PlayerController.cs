@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private float speed = 5f;
-    CurrentDirection cr;
+    private CurrentDirection cr;
     private bool isPlayerDead;
+    private GameManager gameManager;
     
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cr = CurrentDirection.right;
         isPlayerDead = false;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
             StopPlayer();
             isPlayerDead=true;
             this.gameObject.SetActive(false);
+            gameManager.EndLevel();
         }
     }
 
