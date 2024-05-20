@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject lostUI;
     public TMP_Text scoreText;
+    public TMP_Text inGameScoreText;
     private int score;
 
     void Start()
@@ -18,7 +19,8 @@ public class GameManager : MonoBehaviour
     public void EndLevel()
     {
         lostUI.SetActive(true);
-        scoreText.text = "Score: " + score;
+        UpdateScoreText(scoreText);
+        inGameScoreText.gameObject.SetActive(false);
     }
 
     public void RestartGame()
@@ -29,5 +31,16 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void AddScore(int achievedScore)
+    {
+        score += achievedScore;
+        UpdateScoreText(inGameScoreText);
+    }
+
+    private void UpdateScoreText(TMP_Text text)
+    {
+        text.text = "Score: " + score;
     }
 }
