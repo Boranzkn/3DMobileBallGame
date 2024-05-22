@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject lostUI;
-    public TMP_Text scoreText;
-    public TMP_Text inGameScoreText;
+    public GameObject winUI;
+    public TMP_Text winScoreText, lostScoreText, inGameScoreText;
     private int score;
 
     void Start()
@@ -19,13 +19,25 @@ public class GameManager : MonoBehaviour
     public void EndLevel()
     {
         lostUI.SetActive(true);
-        UpdateScoreText(scoreText);
+        UpdateScoreText(lostScoreText);
+        inGameScoreText.gameObject.SetActive(false);
+    }
+
+    public void WinLevel()
+    {
+        winUI.SetActive(true);
+        UpdateScoreText(winScoreText);
         inGameScoreText.gameObject.SetActive(false);
     }
 
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void ExitGame()

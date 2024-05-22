@@ -93,4 +93,14 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finisher"))
+        {
+            StopPlayer();
+            this.gameObject.SetActive(false);
+            gameManager.WinLevel();
+        }
+    }
+
 }
