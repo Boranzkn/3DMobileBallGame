@@ -5,7 +5,7 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     private GameManager gameManager;
-
+    public ParticleSystem coinEffect;
 
     void Start()
     {
@@ -23,7 +23,8 @@ public class Coin : MonoBehaviour
         {
             int minScore = 3, maxScore = 11;
             gameManager.AddScore(Random.Range(minScore, maxScore));
-            Destroy(gameObject);    
+            coinEffect.Play();
+            Destroy(gameObject, 0.5f);    
         }
     }
 }
